@@ -22,11 +22,13 @@ type Koa$Request$subdomains = string[];
 type Koa$Request$type = string;
 type Koa$Request$url = string;
 
-declare class Koa$Request extends http$ClientRequest {
+declare class Koa$Request {
   accepts(...types: string[]): string;
   acceptsCharsets(...charsets: string[]): string;
   acceptsEncodings(...types: string[]): string;
   acceptsLanguages(...charsets: string[]): string;
+  req: http$IncomingMessage;
+  res: http$ClientRequest;
   charset: Koa$Request$charset;
   fresh: Koa$Request$fresh;
   get(field: string): any;
@@ -56,7 +58,9 @@ declare class Koa$Request extends http$ClientRequest {
   url: Koa$Request$url;
 }
 
-declare class Koa$Response extends http$IncomingMessage {
+declare class Koa$Response {
+  req: http$IncomingMessage;
+  res: http$ClientRequest;
   append(field: string, value: string): void;
   attachment(filename?: string): void;
   body?: ?string|Buffer|stream$Duplex|Object;
@@ -97,9 +101,9 @@ declare class Koa$Context {
   assert(value: any, msgOrStatus?: number|string, properties?: Object): void;
   assert(value: any, msgOrStatus?: number|string, statusOrMsg?: number|string, properties?: Object): void;
   cookies: Koa$Cookies;
-  req: http$ClientRequest;
+  req: http$IncomingMessage;
   request: Koa$Request;
-  res: http$IncomingMessage;
+  res: http$ClientRequest;
   respond: bool;
   response: Koa$Response;
   state: Object;
